@@ -1,6 +1,6 @@
 
 angular.module('SearchApp', [
-  'RepsAppControllers'
+  'RepsAppControllers','SensAppControllers'
 ]);
 
 angular
@@ -52,6 +52,49 @@ angular
       repsByState: function (state) {
         return $http
           .get(host + '/reps/by-state/' + state)
+          .then(function (response) {
+            return response.data;
+          });
+    }};
+  });
+
+
+
+  angular
+    .module('SensAppControllers', [
+      'sensService'
+    ])
+    .controller('MainCtrl2', function (sens) {
+      var main3 = this;
+      main3.sens = [];
+
+      main3.searchByZip = function (zip) {
+        sens.allByZip(zip).then(function (data) {
+          main3.sens = data;
+        });
+      },
+      main3.searchSensByLastName = function (lastname) {
+        sens.sensByLastName(lastname).then(function (data) {
+          main3.sens = data;
+        });
+      };
+    });
+
+  angular
+    .module('sensService', [])
+    .factory('sens', function ($http) {
+      var host = 'http://dgm-representatives.herokuapp.com';
+      return {
+        allByZip: function (zip) {
+          return $http
+            .get(host + '/all/by-zip/' + zip)
+            .then(function (response) {
+              return response.data;
+            });
+      },
+      sensByLastName: function (lastname) {
+        return $http
+          .get(host + '/sens/by-name/' + lastname)
           .then(function (response) {
             return response.data;
           });

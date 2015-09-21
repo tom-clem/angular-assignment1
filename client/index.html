@@ -61,6 +61,38 @@
     </ul>
   </div>
 
+
+
+  <div ng-controller="MainCtrl2 as mainVar2" class="container">
+
+    <form ng-submit="mainVar2.searchByZip(mainVar2.inputs.zip2)" class="form-inline">
+
+      <div class="form-group">
+        <label for="zipcode">Zip Code:</label>
+        <input id="zipcode2" class="form-control" type="string" ng-model="mainVar2.inputs.zip2" />
+      </div>
+
+      <button class="btn btn-info" type="submit">Submit</button>
+    </form>
+
+    <form ng-submit="mainVar2.searchSensByLastName(mainVar2.inputs.LastName)" class="form-inline">
+
+      <div class="form-group">
+        <label for="zipcode">Last Name:</label>
+        <input id="lastname" class="form-control" type="string" ng-model="mainVar2.inputs.LastName" />
+      </div>
+
+      <button class="btn btn-info" type="submit">Submit</button>
+    </form>
+
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="sen in mainVar2.sens">
+        <h4 class="list-group-item-heading">{{sen.name}}</h4>
+        <p>State: {{sen.state}}</p>
+      </li>
+    </ul>
+  </div>
+
   <script src="/bower_components/angular/angular.min.js"></script>
   <script src="/js/app.js"></script>
 </body>
