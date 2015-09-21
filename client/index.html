@@ -1,171 +1,68 @@
 <!DOCTYPE html>
-<html ng-app="RepsApp">
-  <head>
-    <meta charset="utf-8">
-    <title>Find your representative</title>
-    <script  src="bower_components/angular/angular.min.js" ></script>
-    <script  src="js/app.js" ></script>
-    <script  src="js/reps-controller.js" ></script>
-    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css"/>
-    <link rel="stylesheet" href="/bower_components/angular/style.css">
-    <style>
-  body {padding-top: 70px; }
+<html ng-app="SearchApp">
+
+<head>
+  <meta charset="utf-8">
+  <title>Find your representative</title>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <style>
+    body {
+      padding-top: 70px;
+    }
   </style>
-  </head>
-  <body>
+</head>
 
-    <section class="community-stats">
-        <div class="angle-background">
-
-    </div>
-
-    <nav class="navbar navbar-default navbar-fixed-top"><!-- the style tag in the header makes the nav bar fixed -->
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a href="index.html" class="navbar-brand">Search your Reps</a>
-          <a href="index.html" class="navbar-brand">Search your Reps</a>
-          <a href="index.html" class="navbar-brand">Search your Reps</a>
-          <a href="index.html" class="navbar-brand">Search your Reps</a>
-          <a href="index.html" class="navbar-brand">Search your Reps</a>
-        </div>
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="/" class="navbar-brand">Search your Reps</a>
       </div>
-    </nav>
+    </div>
+  </nav>
 
+  <div ng-controller="MainCtrl as mainVar" class="container">
 
-    <div ng-controller="MainCrtl as main" class="container"> <!-- main is the alias -->
+    <form ng-submit="mainVar.searchByZip(mainVar.inputs.zip)" class="form-inline">
 
-      <form class="form-inline" ng-submit="main.searchRepsByZip(main.inputs.zip)"> <!-- form- inline displays everything in one row -->
-        <div class="form-group">
-          <label> <h4>Zip Code:</h4></label>
-          <input id="zipcode" class="form-control" type="string" ng-model="main.inputs.zip"/>
-        </div>
-      <button class="btn btn-primary btn-sm" type="submit" value="Submit">Submit</button>
+      <div class="form-group">
+        <label for="zipcode">Zip Code:</label>
+        <input id="zipcode" class="form-control" type="string" ng-model="mainVar.inputs.zip" />
+      </div>
+
+      <button class="btn btn-info" type="submit">Submit</button>
     </form>
 
-<form class="form-inline" ng-submit="main.searchRepsByName(main.inputs.name)"> <!-- form- inline displays everything in one row -->
-  <div class="form-group">
-    <label> <h4>Reps Name:</h4></label>
-    <input id="name" class="form-control" type="string" ng-model="main.inputs.name"/>
-</div>
-<button class="btn btn-primary btn-sm" type="submit" value="Submit">Submit</button>
-</form>
+    <form ng-submit="mainVar.searchRepsByName(mainVar.inputs.repsLastName)" class="form-inline">
 
-<form class="form-inline" ng-submit="main.searchRepsByState(main.inputs.state)"> <!-- form- inline displays everything in one row -->
-  <div class="form-group">
-    <label> <h4>Reps State:</h4></label>
-    <input id="state" class="form-control" type="string" ng-model="main.inputs.state"/>
-  </div>
-<button class="btn btn-primary btn-sm" type="submit" value="Submit">Submit</button>
-</form>
+      <div class="form-group">
+        <label for="rep-last-name">Rep Last Name:</label>
+        <input id="rep-last-name" class="form-control" type="string" ng-model="mainVar.inputs.repsLastName" />
+      </div>
 
+      <button class="btn btn-info" type="submit">Submit</button>
+    </form>
 
-<ul class="list-group">
-    <li class="list-group-item" ng-repeat="rep in main.reps">
-      <h3 class="list-group-item-heading">{{rep.name}}</h3>
-      <p>State: {{rep.state}}</p>
+    <form ng-submit="mainVar.searchRepsByState(mainVar.inputs.state)" class="form-inline">
+
+      <div class="form-group">
+        <label >State: </label>
+        <input id="state" class="form-control" type="string" ng-model="mainVar.inputs.state" />
+      </div>
+
+      <button class="btn btn-info" type="submit">Submit</button>
+    </form>
+
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="rep in mainVar.reps">
+        <h4 class="list-group-item-heading">{{rep.name}}</h4>
+        <p>State: {{rep.state}}</p>
       </li>
     </ul>
+  </div>
 
+  <script src="/bower_components/angular/angular.min.js"></script>
+  <script src="/js/app.js"></script>
+</body>
 
-
-</div>
-
-
-
-<div ng-controller="RepsController as reps">
-<label>
-<h4>Search By Name</h4>
-<input ng-model="reps.search.name" />
-<button type="button" ng-click="reps.searchByName(reps.search.name)">Search</button>
-</label>
-
-<ul>
-<li ng-repeat="member in reps.members">
-  {{member.name}}
-</li>
-</ul>
-</div>
-
-
-
-<div ng-controller="RepsController as reps">
-<label>
-<h4>Search By State</h4>
-<input ng-model="reps.search.state" />
-<button type="button" ng-click="reps.searchByState(reps.search.state)">Search</button>
-</label>
-
-<ul>
-<li ng-repeat="member in reps.members">
-  {{member.name}}
-</li>
-</ul>
-</div>
-</section>
-<section class="community-stats">
-    <div class="angle-background2">
-
-</div>
-
-
-<div class="row" ng-controller="RepsController as reps">
-  <div class="col-lg-3">
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search by Zip" ng-model="reps.search.zip" >
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button" ng-click="reps.searchByZip(reps.search.zip)">Search!</button>
-      </span>
-    </div><!-- /input-group -->
-    <ul>
-    <li ng-repeat="member in reps.members">
-      {{member.name}}
-    </li>
-    </ul>
-  </div><!-- /.col-lg-6 -->
-</div>
-
-<div class="row" ng-controller="RepsController as reps">
-  <div class="col-lg-3">
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search by Name" ng-model="reps.search.name" >
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button" ng-click="reps.searchByName(reps.search.name)">Search!</button>
-      </span>
-
-    </div><!-- /input-group -->
-    <ul>
-    <li ng-repeat="member in reps.members">
-      {{member.name}}
-    </li>
-    </ul>
-  </div><!-- /.col-lg-6 -->
-</div>
-
-
-
-
-    <div class="row" ng-controller="RepsController as reps">
-      <div class="col-lg-3">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search by State" ng-model="reps.search.state" >
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="button" ng-click="reps.searchByState(reps.search.state)">Search!</button>
-          </span>
-        </div><!-- /input-group -->
-        <ul>
-        <li ng-repeat="member in reps.members">
-          {{member.name}}
-        </li>
-        </ul>
-      </div><!-- /.col-lg-6 -->
-</div>
-
-</section>
-
-
-
-
-
-
-  </body>
 </html>
