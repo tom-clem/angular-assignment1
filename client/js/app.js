@@ -1,38 +1,51 @@
 
 angular.module('SearchApp', [
-  'RepsAppControllers','SensAppControllers'
+  'SearchAppControllers'
 ]);
 
 angular
-  .module('RepsAppControllers', [
-    'repsService'
+  .module('SearchAppControllers', [
+    'searchService'
   ])
-  .controller('MainCtrl', function (reps) {
+  .controller('MainCtrl', function (variable) {
     var main2 = this;
-    main2.reps = [];
+    main2.variable = [];
+
 
     main2.searchByZip = function (zip) {
-      reps.allByZip(zip).then(function (data) {
-        main2.reps = data;
+      variable.allByZip(zip).then(function (data) {
+        main2.variable = data;
       });
     };
 
     main2.searchRepsByName = function (name) {
-      reps.repsByName(name).then(function (data) {
-        main2.reps = data;
+      variable.repsByName(name).then(function (data) {
+        main2.variable = data;
+      });
+    };
+
+    main2.searchSensByName = function (name) {
+      variable.sensByName(name).then(function (data) {
+        main2.variable = data;
       });
     };
 
     main2.searchRepsByState = function (state) {
-      reps.repsByState(state).then(function (data) {
-        main2.reps = data;
+      variable.repsByState(state).then(function (data) {
+        main2.variable = data;
+      });
+    };
+
+    main2.searchSensByState = function (state) {
+      variable.sensByState(state).then(function (data) {
+        main2.variable = data;
       });
     };
   });
 
 angular
-  .module('repsService', [])
-  .factory('reps', function ($http) {
+  .module('searchService', [])
+  .factory('variable', function ($http) {
     var host = 'http://dgm-representatives.herokuapp.com';
     return {
       allByZip: function (zip) {
@@ -49,17 +62,31 @@ angular
             return response.data;
           });
       },
+      sensByName: function (name) {
+        return $http
+          .get(host + '/sens/by-name/' + name)
+          .then(function (response) {
+            return response.data;
+          });
+      },
       repsByState: function (state) {
         return $http
           .get(host + '/reps/by-state/' + state)
           .then(function (response) {
             return response.data;
           });
+        },
+        sensByState: function (state) {
+          return $http
+            .get(host + '/sens/by-state/' + state)
+            .then(function (response) {
+              return response.data;
+            });
     }};
   });
 
 
-
+/*
   angular
     .module('SensAppControllers', [
       'sensService'
@@ -99,4 +126,4 @@ angular
             return response.data;
           });
     }};
-  });
+ }); */

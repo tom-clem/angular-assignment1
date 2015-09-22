@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8">
   <title>Find your representative</title>
-  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="/bower_components/angular/style.css">
   <style>
     body {
       padding-top: 70px;
@@ -21,77 +22,99 @@
     </div>
   </nav>
 
-  <div ng-controller="MainCtrl as mainVar" class="container">
+  <section class="community-stats">
+      <div class="angle-background">
 
-    <form ng-submit="mainVar.searchByZip(mainVar.inputs.zip)" class="form-inline">
+  </div>
+
+  <div ng-controller="MainCtrl as mainVar" class="container-fluid">
+
+    <form ng-submit="mainVar.searchByZip(mainVar.inputs.zip)" class="form-horizontal">
 
       <div class="form-group">
-        <label for="zipcode">Zip Code:</label>
-        <input id="zipcode" class="form-control" type="string" ng-model="mainVar.inputs.zip" />
-      </div>
+        <label class="col-sm-2 control-label" for="zipcode"><h4>Zip Code:</h4></label>
+        <div class="col-sm-2">
+        <input class="form-control" id="zipcode" class="form-control" type="string" ng-model="mainVar.inputs.zip" />
+        </div>
 
-      <button class="btn btn-info" type="submit">Submit</button>
+
+      <button type="submit" class="btn btn-default btn-lg" class="col-md-4">
+    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+  </button>
+  </div>
     </form>
 
-    <form ng-submit="mainVar.searchRepsByName(mainVar.inputs.repsLastName)" class="form-inline">
+    <form ng-submit="mainVar.searchRepsByName(mainVar.inputs.repsLastName)" class="form-horizontal">
 
       <div class="form-group">
-        <label for="rep-last-name">Rep Last Name:</label>
-        <input id="rep-last-name" class="form-control" type="string" ng-model="mainVar.inputs.repsLastName" />
-      </div>
+        <label  class="col-sm-2 control-label"  for="rep-last-name"><h4>Rep Last Name:</h4></label>
+        <div class="col-sm-2">
+        <input class="form-control" id="rep-last-name" class="form-control" type="string" ng-model="mainVar.inputs.repsLastName" />
+        </div>
 
-      <button class="btn btn-info" type="submit">Submit</button>
+
+      <button type="submit" class="btn btn-default btn-lg">
+    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+  </button>
+  </div>
     </form>
 
-    <form ng-submit="mainVar.searchRepsByState(mainVar.inputs.state)" class="form-inline">
+
+    <form ng-submit="mainVar.searchSensByName(mainVar.inputs.sensLastName)" class="form-horizontal">
 
       <div class="form-group">
-        <label >State: </label>
+        <label class="col-sm-2 control-label" for="rep-last-name"><h4>Sen Last Name:</h4></label>
+        <div class="col-sm-2">
+        <input id="rep-last-name" class="form-control" type="string" ng-model="mainVar.inputs.sensLastName" />
+      </div>
+
+      <button type="submit" class="btn btn-default btn-lg">
+    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+  </button>
+</div>
+    </form>
+
+    <form ng-submit="mainVar.searchRepsByState(mainVar.inputs.state)" class="form-horizontal">
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" ><h4>Reps-State: </h4></label>
+        <div class="col-sm-2">
         <input id="state" class="form-control" type="string" ng-model="mainVar.inputs.state" />
       </div>
-
-      <button class="btn btn-info" type="submit">Submit</button>
+      <button type="submit" class="btn btn-default btn-lg">
+    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+  </button>
+</div>
     </form>
 
+
+    <form ng-submit="mainVar.searchSensByState(mainVar.inputs.state2)" class="form-horizontal">
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label"><h4>Sens-State: </h4></label>
+        <div class="col-sm-2">
+        <input id="state2" class="form-control" type="string" ng-model="mainVar.inputs.state2" />
+      </div>
+
+      <button type="submit" class="btn btn-default btn-lg">
+    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+  </button>
+</div>
+    </form>
+
+
+
     <ul class="list-group">
-      <li class="list-group-item" ng-repeat="rep in mainVar.reps">
-        <h4 class="list-group-item-heading">{{rep.name}}</h4>
-        <p>State: {{rep.state}}</p>
+      <li class="list-group-item" ng-repeat="bsp in mainVar.variable">
+        <h3 class="list-group-item-heading">{{bsp.name}}</h3>
+        <p>State: {{bsp.state}}</p>
       </li>
     </ul>
+
+
   </div>
 
 
-
-  <div ng-controller="MainCtrl2 as mainVar2" class="container">
-
-    <form ng-submit="mainVar2.searchByZip(mainVar2.inputs.zip2)" class="form-inline">
-
-      <div class="form-group">
-        <label for="zipcode">Zip Code:</label>
-        <input id="zipcode2" class="form-control" type="string" ng-model="mainVar2.inputs.zip2" />
-      </div>
-
-      <button class="btn btn-info" type="submit">Submit</button>
-    </form>
-
-    <form ng-submit="mainVar2.searchSensByLastName(mainVar2.inputs.LastName)" class="form-inline">
-
-      <div class="form-group">
-        <label for="zipcode">Last Name:</label>
-        <input id="lastname" class="form-control" type="string" ng-model="mainVar2.inputs.LastName" />
-      </div>
-
-      <button class="btn btn-info" type="submit">Submit</button>
-    </form>
-
-    <ul class="list-group">
-      <li class="list-group-item" ng-repeat="sen in mainVar2.sens">
-        <h4 class="list-group-item-heading">{{sen.name}}</h4>
-        <p>State: {{sen.state}}</p>
-      </li>
-    </ul>
-  </div>
 
   <script src="/bower_components/angular/angular.min.js"></script>
   <script src="/js/app.js"></script>
