@@ -10,7 +10,42 @@ angular
   .controller('MainCtrl', function (variable) {
     var main2 = this;
     main2.variable = [];
+    main2.congressType = 'Reps'; // Hinzugefügt - braucht man nicht um ürsprüngliche version zu benutzen
 
+    main2.loading = false;
+
+    main2.apis = [
+      {
+      label: 'Zip',
+      method: function(zip){
+        main2.loading = true;
+        variable('all','zip', zip).then(function(data){
+          main2.variable = data;
+          main2.loading = false;
+        });
+      }
+    },
+    {
+      label: 'Last Name',
+      method: function(name){
+          main2.loading = true;
+        variable(main2.congressType,'name',name).then(function(data){
+          main2.variable = data;
+            main2.loading = false;
+        });
+      }
+    },
+    {
+      label: 'State',
+      method: function(state){
+          main2.loading = true;
+        variable(main2.congressType,'state',state).then(function(data){
+          main2.variable = data;
+            main2.loading = false;
+        });
+    }
+  }];
+    main2.criteria = main2.apis[0];
 
     main2.searchByZip = function (zip) {
       variable.allByZip(zip).then(function (data) {
@@ -41,12 +76,34 @@ angular
         main2.variable = data;
       });
     };
+
   });
 
 angular
   .module('searchService', [])
   .factory('variable', function ($http) {
     var host = 'http://dgm-representatives.herokuapp.com';
+
+
+/**
+function search replaces the code, which would be needed for all the criteria siehe unten
+*/
+function search(type, criteria, query){
+
+  return $http
+  .get(host + '/' + type + '/by-' + criteria + '/' + query)
+  .then(function (response) {
+    return response.data;
+  });
+}
+search.allByZip = search.bind(null, 'all', 'zip'); /** calls search function with the parameters (without query) query wird von der Funktion die die Funktion aufruft übergeben. Diese Funktion übergibt der obrigen immer nur "2" Parameter*/
+search.repsByName = search.bind(null, 'reps', 'name');
+search.repsByState = search.bind(null, 'reps', 'state');
+search.sensByName = search.bind(null, 'sens', 'name');
+search.sensByState = search.bind(null, 'sens', 'state');
+
+return search;
+/**
     return {
       allByZip: function (zip) {
         return $http
@@ -82,7 +139,7 @@ angular
             .then(function (response) {
               return response.data;
             });
-    }};
+    }}; */
   });
 
 

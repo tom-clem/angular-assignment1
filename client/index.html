@@ -113,8 +113,42 @@
 
 
   </div>
+<div ng-controller="MainCtrl as mainVar" class="container-fluid">
+<div class="radio">
+  <label>
+    <input type="radio" ng-change="mainVar.input =''" ng-model="mainVar.congressType" value="Reps">
+    Representatives
+  </label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" ng-change="mainVar.input =''" ng-model="mainVar.congressType" value="Sens">
+    Senators
+  </label>
+</div>
 
 
+<!--made with input and select -->
+<form class="form-inline">
+  <select class="form-control" ng-model="mainVar.criteria" ng-options="item as item.label for item in mainVar.apis" ng-change="mainVar.input =''" >
+  </select>
+  <input class="form-control" type="text" ng-model="mainVar.input" ng-disabled="mainVar.loading" autofocus>
+  <button ng-click="mainVar.criteria.method(mainVar.input)" type="submit" class="btn btn-info" ng-disabled="mainVar.loading || !mainVar.input">Submit</button>
+</form>
+<ul class="list-group">
+     <li class="list-group-item" ng-show="mainVar.loading">
+       Loading...
+     </li>
+     <li class="list-group-item" ng-show="mainVar.variable.length === 0 && !mainVar.loading">
+       No Results
+     </li>
+     <li ng-hide="mainVar.loading" class="list-group-item" ng-repeat="bsp in mainVar.variable">
+       <h3 class="list-group-item-heading">{{bsp.name}}</h3>
+       <p>State: {{bsp.state}}</p>
+     </li>
+   </ul>
+
+</div>
 
   <script src="/bower_components/angular/angular.min.js"></script>
   <script src="/js/app.js"></script>
